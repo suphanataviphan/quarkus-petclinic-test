@@ -1,5 +1,10 @@
 = Quarkus Petclinic project
 
+** This command must be run before commit and push the code to repo
+----
+git update-index --chmod=+x mvnw
+----
+
 == Run Locally
 
 === Create css
