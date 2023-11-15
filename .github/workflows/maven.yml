@@ -29,3 +29,16 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: ./mvnw -B package -DskipTests --update-snapshots verify
+    - name: docker login
+      env:
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}   
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      ## run command use for running linux command  
+      run: |
+        docker login lbankinfologistix.azurecr.io -u $DOCKER_USER -p $DOCKER_PASSWORD
+    - name: docker build quarkus-petclinic-jvm
+      run: |
+        docker build --no-cache -f src/main/docker/Dockerfile.jvm -t lbankinfologistix.azurecr.io/quarkus-petclinic-jvm:latest .
+    - name: docker push
+      run: |
+        docker push lbankinfologistix.azurecr.io/quarkus-petclinic-jvm:latest
